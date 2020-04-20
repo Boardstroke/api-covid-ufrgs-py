@@ -12,7 +12,7 @@ class Municipios:
 		d = self.data
 		arr = []
 		for mp in d:
-			arr.append([mp['pop_senso_2010'], mp['pop_est_2019']])
+			arr.append([mp['nome'], mp['pop_senso_2010'], mp['pop_est_2019'], mp['mesoregiao']])
 		return np.asarray(arr)
 
 class Distancias:
