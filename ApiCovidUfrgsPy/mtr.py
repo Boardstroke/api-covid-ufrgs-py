@@ -3,6 +3,18 @@ import numpy as np
 
 url = 'https://f6d58753.ngrok.io'
 
+class Municipios:
+	def __init__(self, url=url):
+		self.url = url + '/index/municipios'
+		self.data = r.get(self.url).json()
+
+	def matriz_municipios(self):
+		d = self.data
+		arr = []
+		for mp in d:
+			arr.append([mp['pop_senso_2010'], mp['pop_est_2019']])
+		return np.asarray(arr)
+
 class Distancias:
 	def __init__(self,url=url):
 		self.url = url + '/index/distancias'
