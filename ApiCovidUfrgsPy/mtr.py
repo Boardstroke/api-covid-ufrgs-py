@@ -1,7 +1,7 @@
 import requests as r
 import numpy as np
 
-url = 'http://localhost:8081'
+url = 'https://d0d11737.ngrok.io'
 
 class Municipios:
 	def __init__(self, url=url):
