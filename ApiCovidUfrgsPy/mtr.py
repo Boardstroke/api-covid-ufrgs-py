@@ -18,7 +18,7 @@ class Municipios:
 class Distancias:
 	def __init__(self,url=url):
 		self.url = url + '/index/distancias'
-		self.mps = r.get(self.url).json()
+		self.mps = r.get(self.url)
 
 	def matriz_distancia(self):
 		arr_arr = []
