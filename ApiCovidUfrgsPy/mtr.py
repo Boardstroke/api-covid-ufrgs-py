@@ -1,7 +1,7 @@
 import requests as r
 import numpy as np
 
-url = 'https://f6d58753.ngrok.io'
+url = 'http://localhost:8081'
 
 class Municipios:
 	def __init__(self, url=url):
@@ -29,9 +29,21 @@ class Distancias:
 			arr_arr.append(arr)
 		return np.asarray(arr_arr)
 
+	def matriz_limitrofes(self):
+		arr_arr = []
+		for i in range(0,167):
+			arr = []
+			for mp in self.mps[i*167:(i+1)*167]:
+				if(mp['limitrofes'] == 1):
+					arr.append(mp['distancia'])
+				elif(mp['limitrofes'] == 0):
+					arr.append(0)
+			arr_arr.append(arr)
+		return np.asarray(arr_arr)
+
 	def matriz_distancia_simetrica_media(self):
 		matriz = self.matriz_distancia()
-		return matriz.transpose() + matriz
+		return (matriz.transpose() + matriz)/2
 
 class Rodoviarias:
 	def __init__(self, url=url):
