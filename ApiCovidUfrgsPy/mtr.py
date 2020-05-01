@@ -1,7 +1,7 @@
 import requests as r
 import numpy as np
 
-url = 'https://d0d11737.ngrok.io'
+url = r.get('https://api-covid-ufrgs.herokuapp.com/links').json()[-1]['link']
 
 class Municipios:
 	def __init__(self, url=url):
@@ -18,7 +18,11 @@ class Municipios:
 class Distancias:
 	def __init__(self,url=url):
 		self.url = url + '/index/distancias'
-		self.mps = r.get(self.url)
+		try:
+			self.mps = r.get(self.url).json()
+		except NameError as err:
+			print(err);
+
 
 	def matriz_distancia(self):
 		arr_arr = []
@@ -41,9 +45,17 @@ class Distancias:
 			arr_arr.append(arr)
 		return np.asarray(arr_arr)
 
-	def matriz_distancia_simetrica_media(self):
-		matriz = self.matriz_distancia()
-		return (matriz.transpose() + matriz)/2
+	def matriz_distancia_raio(self, raio):
+		arr_arr = []
+		for i in range(0,167):
+			arr = []
+			for mp in self.mps[i*167:(i+1)*167]:
+				if(mp['distancia'] <= raio):
+					arr.append(mp['distancia'])
+				else:
+					arr.append(0)
+			arr_arr.append(arr)
+		return np.array(arr_arr)
 
 class Rodoviarias:
 	def __init__(self, url=url):
